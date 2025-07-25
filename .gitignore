@@ -1,0 +1,7 @@
+__pycache__/
+*.pyc
+.vscode/
+*.log
+.buildozer/
+*.apk
+local_data.json
