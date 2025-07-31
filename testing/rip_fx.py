@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 """
 rip_fx.py
 
@@ -15,7 +14,7 @@ import os
 import json
 import logging
 import requests
-
+from .assets import *
 # Frankfurter endpoint
 CURRENCIES_URL = "https://api.frankfurter.app/currencies"
 
