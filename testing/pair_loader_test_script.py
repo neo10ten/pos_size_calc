@@ -1,7 +1,5 @@
 #!/usr/bin/env python3
 """
-test_fx_pairs.py
-
 Fetches the latest currency pairs from Yahoo Finance, saves to JSON,
 and lets you test tickers interactively.
 """
