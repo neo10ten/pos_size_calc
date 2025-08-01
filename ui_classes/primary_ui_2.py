@@ -7,7 +7,9 @@ from ..assets import CURRENCIES,STANDARD_SET,OTHER_INSTRUMENTS
 class PrimaryUI(BoxLayout):
     def __init__(self, controller, **kwargs):
         super().__init__(orientation="vertical", spacing=10, padding=10, **kwargs)
+        # Assign controller and point view back to it
         self.controller = controller
+        self.controller.view = self
 
         # Build GridLayout form, store references to self.acc_input, etc.
         form = GridLayout(cols=2, row_force_default=True,
@@ -58,13 +60,14 @@ class PrimaryUI(BoxLayout):
         
         # FX Rate field (auto‐populated or manual)
         form.add_widget(Label(text="FX Rate:"))
+        hint_text = ""
         if self.controller.online:
             hint_text = "Fetching..."
         else:
             hint_text = "Enter manually: "
         self.rate_input = TextInput(
             multiline=False, input_filter="float",
-            hint_text=""
+            hint_text=hint_text
         )
         form.add_widget(self.rate_input)
 

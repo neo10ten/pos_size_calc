@@ -18,9 +18,6 @@ class RootLayout(BoxLayout):
         self.primary = PrimaryUI(controller=controller,size_hint_y=1)
         self.footer = Button(text="Browse All Pairs",size_hint_y=None, height=40)
 
-        # Assign controllers to their UIs
-        controller.view = self.primary
-
         # Add widgets to Layout
         self.add_widget(self.header)
         self.add_widget(self.primary)
