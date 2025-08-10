@@ -1,0 +1,59 @@
+.
+├── __init__.py
+├── __main__.py
+├── assets
+│   ├── __init__.py
+│   └── assets_jsons
+│       ├── asset_version.json
+│       ├── currencies.json
+│       ├── oanda_inst.json
+│       ├── oanda_inst2.json
+│       ├── pairs.json
+│       ├── pairs_split.json
+│       ├── previous_prices.json
+│       └── supported_pairs.json
+├── config
+│   └── core
+│       ├── __init__.py
+│       ├── constants.py
+│       ├── logging_config.py
+│       ├── paths.py
+│       ├── settings.py
+│       └── version.py
+├── notes.txt
+├── requirements.txt
+├── services
+│   ├── __init__.py
+│   ├── downloader.py
+│   ├── loader.py
+│   ├── previous_prices.py
+│   ├── prompts.py
+│   ├── startup.py
+│   ├── updater.py
+│   └── version_checker.py
+├── testing
+│   ├── pair_load_v3.py
+│   ├── pair_loader_test_script.py
+│   └── rip_fx.py
+├── tool_classes
+│   ├── __init__.py
+│   ├── asset_controller.py
+│   ├── fx_converter.py
+│   ├── main_controller.py
+│   ├── position_sizer.py
+│   └── shared_imports.py
+├── tree.txt
+├── ui_classes
+│   ├── __init__.py
+│   ├── main_app.py
+│   ├── primary_ui.py
+│   ├── primary_ui_2.py
+│   ├── root_ui.py
+│   ├── scrollable_spinner.py
+│   └── shared_imports.py
+└── utils
+    ├── __init__.py
+    ├── network.py
+    └── threads.py
+
+10 directories, 47 files

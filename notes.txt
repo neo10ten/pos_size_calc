@@ -1,0 +1,15 @@
+Save app tree in pos_size_calc directory:
+
+-> In Ubuntu terminal
+-> Navigate to directory folder (pos_size_calc)
+-> Copy and paste tree -L 3 -I "node_modules|.git|__pycache__" > tree.txt
+
+
+Activate .sh script to startup V-Env
+
+-> In Ubuntu terminal
+-> Check in root directory
+-> Copy and paste source venv_startup.sh
+-> Input on prompt
+
+

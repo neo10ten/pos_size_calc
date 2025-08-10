@@ -1,2 +1,3 @@
+# services/__init__.py
 
-from .startup import prewarm_rates, check_for_update
+# from loader import load_currencies,load_pairs_split,load_other_instruments

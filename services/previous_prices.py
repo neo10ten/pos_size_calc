@@ -1,7 +1,7 @@
-# assets/previuos_prices.py
+# services/previuos_prices.py
 
 import json
-from .paths import ASSETS_JSONS
+from config.core.paths import ASSETS_JSONS
 
 PREVIOUS_FILE = ASSETS_JSONS / "previous_prices.json"
 

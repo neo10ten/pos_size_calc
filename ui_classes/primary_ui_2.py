@@ -1,8 +1,7 @@
-# ui_classes/primary_ui.py
+# ui_classes/primary_ui_2.py
 
 from .shared_imports import *
 from .scrollable_spinner import ScrollableSpinner
-from ..assets import CURRENCIES,STANDARD_SET,OTHER_INSTRUMENTS
 
 class PrimaryUI(BoxLayout):
     def __init__(self, controller, **kwargs):
@@ -17,27 +16,27 @@ class PrimaryUI(BoxLayout):
 
         # Account Balance
         form.add_widget(Label(text="Account Balance:"))
-        self.acc_input = TextInput(multiline=False, input_filter="float")
+        self.acc_input = TextInput(text="1000000", multiline=False, input_filter="float")
         form.add_widget(self.acc_input)
         
         # Account Currency
         form.add_widget(Label(text="Account Currency:"))
-        self.acc_curr = ScrollableSpinner(text="Select From: ", values=sorted(CURRENCIES))
+        self.acc_curr = ScrollableSpinner(text="Select From: ", values=[])
         form.add_widget(self.acc_curr)
         
         # Allocation % of account
         form.add_widget(Label(text="Allocate % of Account:"))
-        self.pct_input = TextInput(multiline=False, input_filter="float")
+        self.pct_input = TextInput(text="1", multiline=False, input_filter="float")
         form.add_widget(self.pct_input)
 
         # Stock Price
         form.add_widget(Label(text="Stock Price:"))
-        self.price_input = TextInput(multiline=False, input_filter="float")
+        self.price_input = TextInput(text="25", multiline=False, input_filter="float")
         form.add_widget(self.price_input)
         
         # Stock Currency
         form.add_widget(Label(text="Stock Currency:"))
-        self.stock_curr = ScrollableSpinner(text="Select From: ", values=sorted(CURRENCIES))
+        self.stock_curr = ScrollableSpinner(text="Select From: ", values=[])
         form.add_widget(self.stock_curr)
         
         # Stock Leverage
@@ -47,15 +46,13 @@ class PrimaryUI(BoxLayout):
 
         # FX-Pair Spinner
         form.add_widget(Label(text="Or pick a predefined pair:"))
-        self.pair_spinner = ScrollableSpinner(text="Select Pair", values=sorted(STANDARD_SET))
+        self.pair_spinner = ScrollableSpinner(text="Select Pair", values=[])
         self.pair_spinner.bind(text=self.on_pair_select)
         form.add_widget(self.pair_spinner)
 
         # Non-currency Instruments
         form.add_widget(Label(text="Other Instruments:"))
-        # Will load from oanda_inst2.json in current version
-        other_insts = OTHER_INSTRUMENTS
-        self.other_inst_spinner = ScrollableSpinner(text="View Other Instruments", values=sorted(other_insts))
+        self.other_inst_spinner = ScrollableSpinner(text="View Other Instruments", values=[])
         form.add_widget(self.other_inst_spinner)
         
         # FX Rate field (auto‐populated or manual)
@@ -72,7 +69,7 @@ class PrimaryUI(BoxLayout):
         form.add_widget(self.rate_input)
 
         # Inline error + spacer
-        self.error_label = Label(text="THIS IS AN ERROR LABEL", color=(1,0,0,1))
+        self.error_label = Label(text="", color=(1,0,0,1))
         form.add_widget(self.error_label)
         form.add_widget(Label())
         
@@ -94,8 +91,21 @@ class PrimaryUI(BoxLayout):
         self.update_result
         self.add_widget(self.result_label)
     
+    # Define function to set currencies for scrollers
+    def set_currency_options(self, currencies):
+        self.acc_curr.values = sorted(currencies)
+        self.stock_curr.values = sorted(currencies)
+    
+    # Define function to set pairs for scroller
+    def set_pair_options(self, pairs):
+        self.pair_spinner.values = sorted(pairs)
+
+    # Define function to set instruments for scroller
+    def set_other_instruments(self, instruments):
+        self.other_inst_spinner.values = sorted(instruments)
+    
     # Function to allocate b/q according to selection
-    def on_pair_select(self, spinner, text):
+    def on_pair_select(self, text):
         """Update base/quote and delegate rate fetch."""
         if len(text) == 6:
             self.acc_curr.text = text[:3]
@@ -117,23 +127,15 @@ class PrimaryUI(BoxLayout):
                 "price":        float(self.price_input.text),
                 "base":         self.acc_curr.text,
                 "quote":        self.stock_curr.text,
+                "leverage":     float(self.lev_input.text),
                 "manual_rate":  float(self.rate_input.text) if self.rate_input.text else None
             }
-        except ValueError:
-            self.show_error("Enter valid numbers in all fields.")
-            return
-
-        if self.controller.online:   ########     NEED TO CHANGE?????? here to end of func
             self.controller.start_calculation(raw)
-        else:
-            self.controller.prompt_manual_rate()
-
+        except (KeyError, ValueError):
+            e = "Check all input values and try again."
+            self.controller._on_error(error=e)
+        
     # Function to update result after calculation runs
     def update_result(self, qty, rate):
         self.result_label.text = f"Qty: {qty}, Rate: {rate:.4f}"
         
-    # Function prompt error if calculation fails
-    def show_error(self, msg):
-        Popup(title="Error",
-              content=Label(text=msg),
-              size_hint=(0.8,0.4)).open()

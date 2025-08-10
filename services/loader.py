@@ -1,7 +1,7 @@
-# assets/loader.py
+# services/loader.py
 
 import json
-from .paths import ASSETS_JSONS
+from ..config.core.paths import ASSETS_JSONS
 
 # Generic json loader from assets/assets_jsons
 def load_json(name):

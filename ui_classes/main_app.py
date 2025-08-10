@@ -1,13 +1,10 @@
-# pos_size_calc/ui_classes/main_app.py
+# ui_classes/main_app.py
 
 from kivy.app import App
 
 from .root_ui import RootLayout
-from .prompts import show_update_prompt
-from ..assets.updater import download_assets
-from ..services.startup import prewarm_rates,check_for_update
-
-
+from ..services.startup import prewarm_rates,version_update_check
+from ..services.previous_prices import save_previous_prices
 
 
 class MainApp(App):
@@ -15,10 +12,16 @@ class MainApp(App):
         return RootLayout()
 
     def on_start(self):
-        # 1) Warm rates
-        prewarm_rates()
 
-        # 2) Check assets; if needed, prompt user on the main loop
-        check_for_update(lambda result: 
-            show_update_prompt(*result, download_assets) if result else None
-        )
+        # 1) Check for updated asset verions
+        version_update_check()
+        
+        # 2) Warm rates
+        prewarm_rates()
+    
+    def on_stop(self):
+        
+        # NEEDS FIXING TO PASS PRICES FROM WHEREVER HELD ON RUNTIME???
+        
+        # Save prices to cache for use on next open when offline
+        save_previous_prices()

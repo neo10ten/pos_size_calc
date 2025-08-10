@@ -2,7 +2,7 @@
 
 from .shared_imports import BoxLayout, Label, Button
 from .primary_ui_2 import PrimaryUI
-from ..tool_classes.ui_controller import Controller
+from ..tool_classes.main_controller import Controller
 
 
 

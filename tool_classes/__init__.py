@@ -8,4 +8,4 @@ __all__ = [
 
 from .position_sizer import PositionSizer
 from .fx_converter import ForexConverter
-from .ui_controller import Controller
+from .main_controller import Controller

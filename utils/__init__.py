@@ -10,8 +10,6 @@ from .threads import (
     executor,             # optional shared executor
 )
 
-from .logging_config import setup_logging
-
 from .network import (
     create_session,
     session,
